@@ -15,12 +15,8 @@ import java.util.stream.Collectors;
 
 class Transferability extends RTC {
   @Override
-  void addControlFlow(FlowNode source, FlowNode target) {
-    if (!isANDJoin(source) && !isXORSplit(source)) {
-      getForeset(source)
-        .forEach(i -> getAfterset(target)
-          .forEach(j -> addRelation(i, j)));
-    }
+  boolean isTransferring(FlowNode flowNode) {
+    return isANDJoin(flowNode) && isXORSplit(flowNode);
   }
 
   private boolean isANDJoin(FlowNode flowNode) {

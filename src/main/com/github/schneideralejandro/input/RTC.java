@@ -25,11 +25,27 @@ abstract class RTC {
     return reachability;
   }
 
+  static Reachability getClone(Reachability original) {
+    Reachability clone = new Reachability();
+    clone.addRTC(original);
+    return clone;
+  }
+
   static Transferability getTransferability(ProcessModel processModel) {
     Transferability transferability = new Transferability();
     transferability.addFlowNodes(processModel.getFlowNodes());
     transferability.addControlFlows(processModel.getControlFlow());
     return transferability;
+  }
+
+  static Transferability getClone(Transferability original) {
+    Transferability clone = new Transferability();
+    clone.addRTC(original);
+    return clone;
+  }
+
+  private Map<FlowNode, Set<FlowNode>> getRelations() {
+    return relations;
   }
 
   void addFlowNodes(Collection<FlowNode> flowNodes) {
@@ -46,7 +62,20 @@ abstract class RTC {
     controlFlows.forEach(cf -> addControlFlow(cf.getSource(), cf.getTarget()));
   }
 
-  abstract void addControlFlow(FlowNode source, FlowNode target);
+  void addControlFlow(FlowNode source, FlowNode target) {
+    if (isTransferring(source)) {
+      getForeset(source)
+        .forEach(i -> getAfterset(target)
+          .forEach(j -> relations.get(i).add(j)));
+    }
+  }
+
+  abstract boolean isTransferring(FlowNode flowNode);
+
+  void addRTC(RTC rtc) {
+    rtc.getRelations()
+      .forEach((k, v) -> relations.put(k, new HashSet<>(v)));
+  }
 
   void addRelation(FlowNode source, FlowNode target) {
     relations.get(source).add(target);

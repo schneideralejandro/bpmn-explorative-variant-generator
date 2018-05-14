@@ -13,9 +13,7 @@ import java.util.stream.Collectors;
 
 class Reachability extends RTC {
   @Override
-  void addControlFlow(FlowNode source, FlowNode target) {
-    getForeset(source)
-      .forEach(u -> getAfterset(target)
-        .forEach(d -> addRelation(u, d)));
+  public boolean isTransferring(FlowNode flowNode) {
+    return true;
   }
 }

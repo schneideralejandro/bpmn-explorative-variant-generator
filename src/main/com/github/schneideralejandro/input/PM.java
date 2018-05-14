@@ -29,8 +29,15 @@ public class PM {
   }
 
   // For the variants.
-  public PM getClone(PM pm) {
-    
+  public static PM getClone(PM root) {
+    PM clone = new PM();
+    ProcessModel processModel = root.getProcessModel().clone();
+    clone.setProcessModel(processModel);
+    Reachability reachability = RTC.getClone(root.getReachability());
+    clone.setReachability(reachability);
+    Transferability transferability = RTC.getClone(root.getTransferability());
+    clone.setTransferability(transferability);
+    return clone;
   }
 
   // For instantiation.
@@ -38,7 +45,7 @@ public class PM {
     this.processModel = processModel;
   }
 
-  // For testing.
+  // For cloning/testing.
   ProcessModel getProcessModel() {
     return processModel;
   }
@@ -56,6 +63,11 @@ public class PM {
     this.reachability = reachability;
   }
 
+  // For cloning.
+  private Reachability getReachability() {
+    return reachability;
+  }
+
   public Set<FlowNode> getUpstream(FlowNode flowNode) {
     return Collections.unmodifiableSet(reachability.getForeset(flowNode));
   }
@@ -71,6 +83,11 @@ public class PM {
   // For instantiation.
   private void setTransferability(Transferability transferability) {
     this.transferability = transferability;
+  }
+
+  // For cloning.
+  private Transferability getTransferability() {
+    return transferability;
   }
 
   public Set<FlowNode> getTransferring(FlowNode flowNode) {
