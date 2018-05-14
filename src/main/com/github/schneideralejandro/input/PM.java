@@ -17,7 +17,8 @@ public class PM {
     // Use the static factories.
   }
 
-  public static PM get(ProcessModel processModel) {
+  // For the root model.
+  public static PM getRoot(ProcessModel processModel) {
     PM root = new PM();
     root.setProcessModel(processModel);
     Reachability reachability = RTC.getReachability(processModel);
@@ -25,6 +26,11 @@ public class PM {
     Transferability transferability = RTC.getTransferability(processModel);
     root.setTransferability(transferability);
     return root;
+  }
+
+  // For the variants.
+  public PM getClone(PM pm) {
+    
   }
 
   // For instantiation.

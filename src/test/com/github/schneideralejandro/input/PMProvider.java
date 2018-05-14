@@ -29,7 +29,7 @@ class PMProvider implements ParameterResolver {
     URL url = classLoader.getResource("ps01.json");
     try {
       ProcessModel processModel = ProcessModelFactory.get(url.getPath());
-      return PM.get(processModel);
+      return PM.getRoot(processModel);
     } catch (IOException | SerializationException e) {
       throw new ParameterResolutionException(e.getMessage());
     }

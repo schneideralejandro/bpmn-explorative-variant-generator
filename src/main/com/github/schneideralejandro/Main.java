@@ -12,7 +12,7 @@ public class Main {
   public static void main(String... args) {
     try {
       ProcessModel processModel = ProcessModelFactory.get(args[0]);
-      PM root = PM.get(processModel);
+      PM root = PM.getRoot(processModel);
     } catch (IOException | SerializationException e) {
       e.printStackTrace();
     }

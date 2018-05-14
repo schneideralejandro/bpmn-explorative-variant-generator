@@ -22,7 +22,7 @@ class PMUnitTests {
   @Test
   void processModelIsWrapped() {
     ProcessModel before = new ProcessModel();
-    PM pm = PM.get(before);
+    PM pm = PM.getRoot(before);
     ProcessModel after = pm.getProcessModel();
     assertEquals(before, after);
   }
@@ -110,8 +110,8 @@ class PMUnitTests {
   void usesProcessModelIdentity() {
     ProcessModel processModelA = new ProcessModel();
     ProcessModel processModelB = new ProcessModel();
-    PM pmA = PM.get(processModelA);
-    PM pmB = PM.get(processModelB);
+    PM pmA = PM.getRoot(processModelA);
+    PM pmB = PM.getRoot(processModelB);
     assertNotEquals(pmA, pmB);
     processModelB.setId(processModelA.getId());
     assertEquals(pmA, pmB);
@@ -120,7 +120,7 @@ class PMUnitTests {
   @Test
   void usesProcessModelHashCode() {
     ProcessModel processModel = new ProcessModel();
-    PM pm = PM.get(processModel);
+    PM pm = PM.getRoot(processModel);
     assertEquals(processModel.hashCode(), pm.hashCode());
   }
 }
